@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
-import logo from './logo.svg';
-import './App.css';
-import Person from './Person/Person';
-import Radium, {StyleRoot} from 'radium';
+import logo from '../logo.svg';
+import classes from './App.css';
+import Person from '../components/Persons/Person/Person';
+import ErrorBoundary from '../components/ErrorBoundary/ErrorBoundary'
 
-
+console.log(`css stuff: ${JSON.stringify(classes)}`)
 class App extends Component {
   state = {
     persons: [
@@ -45,63 +45,37 @@ class App extends Component {
   };
   
   render() {
-    
-    const style = {
-      backgroundColor: 'green',
-      color: 'yellow',
-      font: 'inerit',
-      border: '1px solid blue',
-      padding: '8px',
-      cursor: 'pointer',
-      ':hover': {
-        backgroundColor: 'lightgreen',
-        color: 'black'
-      }
-    };
-    
+
+    let persons = null;
+    let btnClass = '';
+
     if (this.state.showPersons) {
-      style.backgroundColor = 'red';
-      style.color = 'white';
-      style[':hover'] = {
-        backgroundColor: 'salmon',
-        color: 'black'
-      };
-    }
-    
-    
-    const classes = [];
-    if (this.state.persons.length <= 2) {
-      classes.push('red');
-    }
-    if (this.state.persons.length <= 1) {
-      classes.push('bold');
+      btnClass = classes.Red;
     }
     
     return (
-      <StyleRoot>
-        
-        <div className="App">
-          <header className="App-header">
-            <img src={logo} className="App-logo" alt="logo"/>
-            <h1 className="App-title">Welcome to React6</h1>
+        <div className={classes.App}>
+          <header className={classes.App_header}>
+            <img src={logo} className={classes.App_logo} alt="logo"/>
+            <h1 className={classes.App_title}>Welcome to React6</h1>
           </header>
-          <p className="App-intro">
+          <p className={classes.App_intro}>
             To get started, edit <code>src/App.js</code> and save to reload.
           </p>
-          <p className={classes.join(' ')}>This is really working</p>
+          <p>This is really working!</p>
           <button
-            style={style}
+            className={btnClass}
             onClick={this.togglePersonsHandler}>Toggle Persons
           </button>
           {this.state.showPersons ? this.state.persons.map((p, i) => {
-            return <Person key={p.id} {...p}
+            return <ErrorBoundary><Person key={p.id} {...p}
                            click={this.deletePersonHandler}
-                           changed={(event) => this.nameChangedHandler(event, p.id)}/>;
+                           changed={(event) => this.nameChangedHandler(event, p.id)}/>
+            </ErrorBoundary>;
           }) : null}
         </div>
-      </StyleRoot>
     );
   }
 }
 
-export default Radium(App);
+export default App;
