@@ -1,15 +1,30 @@
 import React, {Component} from 'react';
 import classes from "./Cockpit.css";
+import Aux from '../../hoc/Aux'
 
 class Cockpit extends Component {
+  constructor(props) {
+    super(props)
+    
+    console.log('[Cockpit.js] Inside Constructor', props)
+  }
+  
+  componentWillMount() {
+    console.log('[Cockpit.js] Inside Will Mount]')
+  }
+  
+  componentDidMount() {
+    console.log('[Cockpit.js] Inside Did Mount]')
+  }
   
   render() {
+    console.log('[Cockpit.js] Inside render')
     const props = this.props
     
-    let btnClass = '';
+    let btnClass = classes.Button;
     
     if (props.showPersons) {
-      btnClass = classes.Red;
+      btnClass = [classes.Button, classes.Red].join(' ');
     }
     
     const assignedClasses = [];
@@ -21,13 +36,13 @@ class Cockpit extends Component {
     }
     
     return (
-      <div className={classes.Cockpit}>
+      <Aux>
         <p className={assignedClasses.join(' ')}>This changes with # of elements!</p>
         <button
           className={btnClass}
           onClick={props.click}>Toggle Persons
         </button>
-      </div>
+      </Aux>
     );
   }
 }

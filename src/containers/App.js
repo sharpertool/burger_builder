@@ -1,18 +1,20 @@
-import React, {Component} from 'react';
+import React, {PureComponent} from 'react';
 import logo from '../logo.svg';
 import classes from './App.css';
 import Persons from '../components/Persons/Persons';
 import Cockpit from '../components/Cockpit/Cockpit';
 import Header from '../components/Header';
+import Aux from '../hoc/Aux';
+import withClass from '../hoc/withClass';
 
 console.log(`css stuff: ${JSON.stringify(classes)}`);
 
-class App extends Component {
+class App extends PureComponent {
   
   constructor(props) {
-    super(props)
+    super(props);
     
-    console.log('[App.js] Inside Constructor', props)
+    console.log('[App.js] Inside Constructor', props);
     
     this.state = {
       persons: [
@@ -20,16 +22,31 @@ class App extends Component {
         {id: 'xxy', name: 'Manu', age: 29},
         {id: 'xxz', name: 'Stephanie', age: 26},
       ],
-      showPersons: true
-    }
+      showPersons: false,
+      toggleClicked: 0,
+    };
   }
   
   componentWillMount() {
-    console.log('Yeah, it will mount')
+    console.log('[App.js] Inside Will Mount]');
   }
   
   componentDidMount() {
-    console.log('It was successfully mounted. I could do some side-effects here if I want.')
+    console.log('[App.js] Inside Did Mount]');
+  }
+  
+  // shouldComponentUpdate(nextProps, nextState) {
+  //   console.log('[UPDATE App.js] Inside shouldComponentUpdate', nextProps, nextState)
+  //   return nextState.persons !== this.state.persons
+  //   || nextState.showPersons !== this.state.showPersons
+  // }
+  
+  componentWillUpdate(nextProps, nextState) {
+    console.log('[UPDATE App.js] Inside componentWillUpdate', nextProps, nextState);
+  }
+  
+  componentDidUpdate() {
+    console.log('[UPDATE App.js] Inside componentDidUpdate');
   }
   
   nameChangedHandler = (event, id) => {
@@ -46,18 +63,31 @@ class App extends Component {
   };
   
   togglePersonsHandler = () => {
-    this.setState({showPersons: !this.state.showPersons});
+    this.setState((prevState, props) => {
+      const doesShow = prevState.showPersons
+        return {
+          showPersons: !doesShow,
+          toggleClicked: prevState.toggleClicked + 1
+        };
+      }
+    );
   };
   
   render() {
-    console.log('rendering....')
+    console.log('[App.js] Inside render');
     return (
-      <div className={classes.App}>
+      <Aux>
         <Header
           logo={logo}
           message={this.props.title}
           classes={classes}
         />
+        <button
+          onClick={() => {
+            this.setState({showPersons: true});
+          }}>
+          Show Persons
+        </button>
         <Cockpit
           persons={this.state.persons}
           showPersons={this.state.showPersons}
@@ -68,9 +98,9 @@ class App extends Component {
           clicked={this.deletePersonHandler}
           changed={this.nameChangedHandler}
         /> : null}
-      </div>
+      </Aux>
     );
   }
 }
 
-export default App;
+export default withClass(App, classes.App);
