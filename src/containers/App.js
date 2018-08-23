@@ -9,6 +9,8 @@ import withClass from '../hoc/withClass';
 
 console.log(`css stuff: ${JSON.stringify(classes)}`);
 
+export const AuthContext = React.createContext(false)
+
 class App extends PureComponent {
   
   constructor(props) {
@@ -24,6 +26,7 @@ class App extends PureComponent {
       ],
       showPersons: false,
       toggleClicked: 0,
+      authenticated: false
     };
   }
   
@@ -73,6 +76,10 @@ class App extends PureComponent {
     );
   };
   
+  loginHandler = () => {
+    this.setState({authenticated: true})
+  }
+  
   render() {
     console.log('[App.js] Inside render');
     return (
@@ -92,12 +99,15 @@ class App extends PureComponent {
           persons={this.state.persons}
           showPersons={this.state.showPersons}
           click={this.togglePersonsHandler}
+          login={this.loginHandler}
         />
+        <AuthContext.Provider value={this.state.authenticated}>
         {this.state.showPersons ? <Persons
           persons={this.state.persons}
           clicked={this.deletePersonHandler}
           changed={this.nameChangedHandler}
         /> : null}
+        </AuthContext.Provider>
       </Aux>
     );
   }
