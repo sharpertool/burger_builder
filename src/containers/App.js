@@ -30,9 +30,9 @@ class App extends PureComponent {
     };
   }
   
-  componentWillMount() {
-    console.log('[App.js] Inside Will Mount]');
-  }
+  // componentWillMount() {
+  //   console.log('[App.js] Inside Will Mount]');
+  // }
   
   componentDidMount() {
     console.log('[App.js] Inside Did Mount]');
@@ -44,8 +44,26 @@ class App extends PureComponent {
   //   || nextState.showPersons !== this.state.showPersons
   // }
   
-  componentWillUpdate(nextProps, nextState) {
-    console.log('[UPDATE App.js] Inside componentWillUpdate', nextProps, nextState);
+  // componentWillUpdate(nextProps, nextState) {
+  //   console.log('[UPDATE App.js] Inside componentWillUpdate', nextProps, nextState);
+  // }
+  
+  static getDerivedStateFromProps(nextProps, prevState) {
+    console.log(
+      "[UPDATE App.js] Inside getDerivedStateFromProps",
+      nextProps,
+      prevState
+    )
+    
+    return prevState
+  }
+  
+  getSnapshotBeforeUpdate() {
+    console.log(
+      "[UPDATE App.js] Inside getSnapshotBeforeUpdate"
+    )
+    
+    return null
   }
   
   componentDidUpdate() {
