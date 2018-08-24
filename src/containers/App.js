@@ -1,53 +1,18 @@
 import React, {PureComponent} from 'react';
-import logo from '../logo.svg';
 import classes from './App.css';
-import Persons from '../components/Persons/Persons';
-import Cockpit from '../components/Cockpit/Cockpit';
-import Header from '../components/Header';
-import Aux from '../hoc/Aux';
 import withClass from '../hoc/withClass';
 
-console.log(`css stuff: ${JSON.stringify(classes)}`);
-
-export const AuthContext = React.createContext(false)
+import Layout from '../components/Layout/Layout'
+import BurgerBuilder from '../containers/BurgerBuilder'
 
 class App extends PureComponent {
   
   constructor(props) {
     super(props);
     
-    console.log('[App.js] Inside Constructor', props);
-    
-    this.state = {
-      persons: [
-        {id: 'xx', name: 'Max', age: 28},
-        {id: 'xxy', name: 'Manu', age: 29},
-        {id: 'xxz', name: 'Stephanie', age: 26},
-      ],
-      showPersons: false,
-      toggleClicked: 0,
-      authenticated: false
-    };
   }
   
-  // componentWillMount() {
-  //   console.log('[App.js] Inside Will Mount]');
-  // }
-  
-  componentDidMount() {
-    console.log('[App.js] Inside Did Mount]');
-  }
-  
-  // shouldComponentUpdate(nextProps, nextState) {
-  //   console.log('[UPDATE App.js] Inside shouldComponentUpdate', nextProps, nextState)
-  //   return nextState.persons !== this.state.persons
-  //   || nextState.showPersons !== this.state.showPersons
-  // }
-  
-  // componentWillUpdate(nextProps, nextState) {
-  //   console.log('[UPDATE App.js] Inside componentWillUpdate', nextProps, nextState);
-  // }
-  
+
   static getDerivedStateFromProps(nextProps, prevState) {
     console.log(
       "[UPDATE App.js] Inside getDerivedStateFromProps",
@@ -70,63 +35,14 @@ class App extends PureComponent {
     console.log('[UPDATE App.js] Inside componentDidUpdate');
   }
   
-  nameChangedHandler = (event, id) => {
-    const idx = this.state.persons.findIndex(p => p.id === id);
-    const persons = [...this.state.persons];
-    persons[idx].name = event.target.value;
-    this.setState({persons: persons});
-  };
-  
-  deletePersonHandler = (personIndex) => {
-    const persons = [...this.state.persons];
-    persons.splice(personIndex, 1);
-    this.setState({persons: persons});
-  };
-  
-  togglePersonsHandler = () => {
-    this.setState((prevState, props) => {
-      const doesShow = prevState.showPersons
-        return {
-          showPersons: !doesShow,
-          toggleClicked: prevState.toggleClicked + 1
-        };
-      }
-    );
-  };
-  
-  loginHandler = () => {
-    this.setState({authenticated: true})
-  }
-  
+
   render() {
-    console.log('[App.js] Inside render');
     return (
-      <Aux>
-        <Header
-          logo={logo}
-          message={this.props.title}
-          classes={classes}
-        />
-        <button
-          onClick={() => {
-            this.setState({showPersons: true});
-          }}>
-          Show Persons
-        </button>
-        <Cockpit
-          persons={this.state.persons}
-          showPersons={this.state.showPersons}
-          click={this.togglePersonsHandler}
-          login={this.loginHandler}
-        />
-        <AuthContext.Provider value={this.state.authenticated}>
-        {this.state.showPersons ? <Persons
-          persons={this.state.persons}
-          clicked={this.deletePersonHandler}
-          changed={this.nameChangedHandler}
-        /> : null}
-        </AuthContext.Provider>
-      </Aux>
+      <div>
+        <Layout>
+          <BurgerBuilder/>
+        </Layout>
+      </div>
     );
   }
 }
