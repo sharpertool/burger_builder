@@ -11,6 +11,7 @@ class App extends PureComponent {
     super(props);
     
   }
+  state = {}
   
 
   static getDerivedStateFromProps(nextProps, prevState) {
