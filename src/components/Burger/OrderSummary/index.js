@@ -4,7 +4,8 @@ import Aux from '~/hoc/Aux'
 import Button from '~/components/UI/Button'
 
 class orderSummary extends React.Component {
-
+  // This could be a functional component, does not have to be a class
+ 
   componentWillUpdate() {
     console.log('[OrderSummary] willUpdate')
   }

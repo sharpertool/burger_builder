@@ -2,18 +2,11 @@ import React, {PureComponent} from 'react';
 import classes from './App.css';
 import withClass from '../hoc/withClass';
 
-import Layout from '../components/Layout/Layout'
+import Layout from '../hoc/Layout/Layout'
 import BurgerBuilder from '../containers/BurgerBuilder'
 
 class App extends PureComponent {
   
-  constructor(props) {
-    super(props);
-    
-  }
-  state = {}
-  
-
   static getDerivedStateFromProps(nextProps, prevState) {
     console.log(
       "[UPDATE App.js] Inside getDerivedStateFromProps",

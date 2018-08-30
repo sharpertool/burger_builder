@@ -2,9 +2,9 @@ import React from 'react';
 
 import classes from './layout.css';
 
-import Aux from '../../hoc/Aux';
-import ToolBar from '~/components/Navigation/Toolbar';
-import SideDrawer from '~/components/SideDrawer';
+import Aux from '~/hoc/Aux';
+import ToolBar from '~/components/Navigation/Toolbar/index';
+import SideDrawer from '~/components/SideDrawer/index';
 
 class layout extends React.Component {
   

@@ -1,11 +1,10 @@
 import React from 'react'
 
 import classes from './style.css'
-import Aux from '../../../hoc/Aux'
-import Backdrop from '../../../components/UI/Backdrop'
+import Aux from '~/hoc/Aux'
+import Backdrop from '~/components/UI/Backdrop'
 
 class modal extends React.Component {
-  
   componentWillUpdate() {
     console.log('[Modal] willUpdate')
   }

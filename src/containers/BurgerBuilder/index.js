@@ -1,8 +1,7 @@
 import React, {Component} from 'react'
 
-import Aux from 'Hoc/Aux'
+import Aux from '~/hoc/Aux'
 import Burger from '~/components/Burger'
-import BurgerIngredient from "~/components/Burger/BurgerIngredient";
 import BuildControls from '~/components/Burger/BuildControls'
 import Modal from 'Components/UI/Modal'
 import OrderSummary from 'Components/Burger/OrderSummary'
@@ -15,9 +14,6 @@ const INGREDIENT_PRICES = {
 }
 
 class BurgerBuilder extends Component {
-  constructor(props) {
-    super(props)
-  }
 
   state = {
     ingredients: {
