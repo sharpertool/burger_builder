@@ -6,7 +6,6 @@ import Layout from '../hoc/Layout/Layout'
 import BurgerBuilder from '../containers/BurgerBuilder'
 
 class App extends PureComponent {
-  
   static getDerivedStateFromProps(nextProps, prevState) {
     console.log(
       "[UPDATE App.js] Inside getDerivedStateFromProps",
