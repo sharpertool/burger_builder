@@ -83,7 +83,7 @@ class BurgerBuilder extends Component {
     }
     
     axios.post('/orders.json', order)
-      //.then(response => new Promise(resolve => setTimeout(() => resolve(response), 1000)))
+      .then(response => new Promise(resolve => setTimeout(() => resolve(response), 1000)))
       .then(response => {
         console.log(`Response from post: ${JSON.stringify(response, null, 2)}`)
         console.log(`Added new order with id ${response.data.name}`)
