@@ -28,6 +28,7 @@ class BurgerBuilder extends Component {
   }
   
   componentDidMount()  {
+    console.log('BurgerBuilder props:', this.props)
     axios.get('/ingredients.json')
       .then(response => {
         console.log(`Adding ingredients from server: ${JSON.stringify(response.data, null, 2)}`)
@@ -71,35 +72,45 @@ class BurgerBuilder extends Component {
 
   purchaseContinueHandler = () => {
     //alert('You continue!')
-    this.setState({loading: true})
-
-    const order = {
-      ingredients: this.state.ingredients,
-      price: this.state.totalPrice,
-      customer: {
-        name: 'Max Shell',
-        address: {
-          street: '100 Blah Road',
-          city: 'Boise',
-          state: 'ID',
-          zip: '83100'
-        },
-        email: 'blah@test.com'
-      },
-      deliveryMethod: 'Uber Eats'
+    // this.setState({loading: true})
+    //
+    // const order = {
+    //   ingredients: this.state.ingredients,
+    //   price: this.state.totalPrice,
+    //   customer: {
+    //     name: 'Max Shell',
+    //     address: {
+    //       street: '100 Blah Road',
+    //       city: 'Boise',
+    //       state: 'ID',
+    //       zip: '83100'
+    //     },
+    //     email: 'blah@test.com'
+    //   },
+    //   deliveryMethod: 'Uber Eats'
+    // }
+    //
+    // axios.post('/orders.json', order)
+    //   .then(response => new Promise(resolve => setTimeout(() => resolve(response), 1000)))
+    //   .then(response => {
+    //     console.log(`Response from post: ${JSON.stringify(response, null, 2)}`)
+    //     console.log(`Added new order with id ${response.data.name}`)
+    //     this.setState({loading: false, purchasing: false})
+    //   })
+    //   .catch(error => {
+    //     console.log(`Error sending order ${JSON.stringify(error, null, 2)}`)
+    //     this.setState({loading: false, purchasing: false})
+    //   })
+    const queryParams = []
+    queryParams.push('price=' + encodeURIComponent(this.state.totalPrice))
+    for (let i in this.state.ingredients) {
+      queryParams.push(encodeURIComponent(i) + '=' + encodeURIComponent(this.state.ingredients[i]))
     }
-    
-    axios.post('/orders.json', order)
-      .then(response => new Promise(resolve => setTimeout(() => resolve(response), 1000)))
-      .then(response => {
-        console.log(`Response from post: ${JSON.stringify(response, null, 2)}`)
-        console.log(`Added new order with id ${response.data.name}`)
-        this.setState({loading: false, purchasing: false})
-      })
-      .catch(error => {
-        console.log(`Error sending order ${JSON.stringify(error, null, 2)}`)
-        this.setState({loading: false, purchasing: false})
-      })
+    const queryString = queryParams.join('&')
+    this.props.history.push({
+      pathname: '/checkout/contact-data',
+      search: '?' + queryString
+    })
   }
 
   removeIngredient = (type) => {
