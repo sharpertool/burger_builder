@@ -99,6 +99,7 @@
     "extends": "react-app"
   },
   "devDependencies": {
+    "jsdom-quokka-plugin": "^1.0.13",
     "prop-types": "^15.6.2"
   }
 }
